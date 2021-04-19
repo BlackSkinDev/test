@@ -5,14 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
-use Tymon\JWTAuth\JWTAuth as JWTAuthJWTAuth;
-
 class UserController extends Controller
 {
     public function register(RegistrationRequest $request){
@@ -43,5 +40,10 @@ class UserController extends Controller
         return response()->json([
             'token' => $jwt_token,
         ],Response::HTTP_OK);
+    }
+
+    public function profile(){
+        $user = JWTAuth::user();
+        return response()->json(['user' => new UserResource($user)],Response::HTTP_OK);
     }
 }

@@ -27,7 +27,16 @@ Route::namespace('Api')->group(function (){
                   // register and login routes
                   Route::post('/register', 'UserController@register');
                   Route::post('/login', 'UserController@login');
-                 
+
+                  //protected routes
+                  Route::middleware(['apipass'])->group(function () {
+
+                    // fetching user profile route
+                    Route::get('/user', 'UserController@profile');
+
+                  });
+
+
             });
 
          });

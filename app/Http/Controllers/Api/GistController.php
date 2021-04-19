@@ -9,8 +9,8 @@ use App\Models\Gist;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use JWTAuth;
-
-
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class GistController extends Controller
 {
@@ -45,11 +45,23 @@ class GistController extends Controller
     }
 
 
-    public function show(Gist $gist)
+    public function show($id)
     {
-        return response()->json([
-            'gist' => new GistResource($gist),
-        ], Response::HTTP_OK);
+        try {
+
+            $gist=Gist::findorfail($id);
+            return response()->json([
+                'gist' => new GistResource($gist),
+            ], Response::HTTP_OK);
+
+
+        } catch (Exception $e) {
+
+            if ($e instanceof ModelNotFoundException) {
+                return response()->json(['error' => 'cannot find gist'], Response::HTTP_NOT_FOUND);
+            }
+        }
+
     }
 
 

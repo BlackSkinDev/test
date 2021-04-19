@@ -25,8 +25,9 @@ Route::namespace('Api')->group(function (){
 
             Route::prefix('auth')->group(function () {
                   // register and login routes
-                  Route::post('/login', 'UserController@login');
                   Route::post('/register', 'UserController@register');
+                  Route::post('/login', 'UserController@login');
+                 
             });
 
          });

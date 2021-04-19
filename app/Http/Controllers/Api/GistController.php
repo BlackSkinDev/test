@@ -45,9 +45,11 @@ class GistController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Gist $gist)
     {
-
+        return response()->json([
+            'gist' => new GistResource($gist),
+        ], Response::HTTP_OK);
     }
 
 

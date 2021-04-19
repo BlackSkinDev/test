@@ -30,18 +30,19 @@ Route::namespace('Api')->group(function (){
 
                   //protected routes
                   Route::middleware(['apipass'])->group(function () {
-
-                    // fetching user profile route
-                    Route::get('/user', 'UserController@profile');
+                        // fetching user profile route
+                        Route::get('/user', 'UserController@profile');
 
                   });
-
-
             });
 
-         });
+            //protected routes
+            Route::middleware(['apipass'])->group(function () {
 
-
+                // gist operations routes
+                Route::apiResource('gists', GistController::class);
+             });
+        });
 });
 
 

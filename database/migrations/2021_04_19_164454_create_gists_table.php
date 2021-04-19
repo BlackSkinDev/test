@@ -14,9 +14,11 @@ class CreateGistsTable extends Migration
     public function up()
     {
         Schema::create('gists', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('uuid')->primary();
             $table->string('title');
-            $table->integer('body');
+            $table->text('body');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

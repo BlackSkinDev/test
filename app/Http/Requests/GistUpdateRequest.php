@@ -49,5 +49,14 @@ class GistUpdateRequest extends FormRequest
     }
 
 
+<<<<<<< HEAD
+=======
+    protected function failedAuthorization()
+    {
+
+
+    }
+
+>>>>>>> 052e7eb315ae2ca1639806c7b584010d953f0844
 
 }

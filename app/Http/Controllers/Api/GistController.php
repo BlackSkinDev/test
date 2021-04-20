@@ -91,7 +91,11 @@ class GistController extends Controller
 
         } catch (Exception $e) {
             if ($e instanceof ModelNotFoundException) {
+<<<<<<< HEAD
                 return response()->json(['error' => 'gist does not exist'], Response::HTTP_NOT_FOUND);
+=======
+                return response()->json(['error' => 'cannot find gist'], Response::HTTP_NOT_FOUND);
+>>>>>>> 052e7eb315ae2ca1639806c7b584010d953f0844
             }
 
         }

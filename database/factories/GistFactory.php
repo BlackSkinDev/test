@@ -24,7 +24,7 @@ class GistFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->paragraph,
+            'title' => $this->faker->text(100),
             'body' => $this->faker->text,
             'user_id'=>User::factory(),
         ];

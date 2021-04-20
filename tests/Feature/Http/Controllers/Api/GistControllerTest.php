@@ -42,7 +42,7 @@ class GistControllerTest extends TestCase
         $user= \App\Models\User::factory()->create();
         $token= JWTAuth::fromUser($user);
         $response=$this->withHeaders(['Authorization' => "Bearer {$token}",])->json('POST','api/v1/gists',[
-            'title'=>$name= $faker->paragraph,
+            'title'=>$name= $faker->text(100),
             'body' => $email= $faker->text,
         ]);
         $response->assertStatus(Response::HTTP_CREATED)
@@ -113,7 +113,7 @@ class GistControllerTest extends TestCase
         $user= \App\Models\User::factory()->create();
         $token= JWTAuth::fromUser($user);
         $response=$this->withHeaders(['Authorization' => "Bearer {$token}",])->json('PUT',"api/v1/gists/-3",[
-            'title'=>$name= $faker->paragraph,
+            'title'=>$name= $faker->text(100),
             'body' => $email= $faker->text,
         ]);
         $response->assertStatus(404);

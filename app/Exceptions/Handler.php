@@ -2,8 +2,12 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+
+use Illuminate\Http\Response;
+
 
 class Handler extends ExceptionHandler
 {
@@ -34,11 +38,11 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+
         });
-
-        
-
-
     }
+
+
+
+
 }

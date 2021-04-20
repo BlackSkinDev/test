@@ -4,16 +4,35 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
+use Illuminate\Http\Response;
+
+use JWTAuth;
+
 class GistUpdateRequest extends FormRequest
 {
+
+
+    protected $user;
+
+
+    public function __construct(){
+        $this->user = JWTAuth::user();
+
+    }
+
+
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
+     *
+
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +43,11 @@ class GistUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title'=>'required',
+            'body'=>'required',
         ];
     }
+
+
+
 }

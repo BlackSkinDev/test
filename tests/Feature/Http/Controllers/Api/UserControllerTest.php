@@ -8,6 +8,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use JWTAuth;
 
+use Illuminate\Http\Response;
+
 
 
 class UserControllerTest extends TestCase
@@ -19,21 +21,21 @@ class UserControllerTest extends TestCase
     /** @test */
     public function non_auth_user_cannot_access_below_endpoint(){
 
-        $index= $this->json('GET','api/v1/auth/user');
-        $index->assertStatus(401);
+        $fetchProfile= $this->json('GET','api/v1/auth/user');
+        $fetchProfile->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     /** @test */
     public  function a_user_can_register(){
         $faker=\Faker\Factory::create();
         $response= $this->json('POST','api/v1/auth/register',[
-            'name'=>$name= $faker->company,
-            'email' => $email= $faker->safeEmail,
+            'name'=>$faker->name,
+            'email' =>$faker->safeEmail,
             'password'=>$password= '1234567'
 
         ]);
         $response
-            ->assertStatus(200)
+            ->assertStatus(Response::HTTP_OK)
             ->assertExactJson([
                 'message' => 'Account Created Successfully'
             ]);
@@ -44,12 +46,12 @@ class UserControllerTest extends TestCase
 
         $user= \App\Models\User::factory()->create();
 
-        $loginData = ['email' => 'sample@test.com', 'password' => 'sample123'];
+        $loginData = ['email' => $user->email, 'password' => 'sample123'];
 
         $response= $this->json('POST','api/v1/auth/login',$loginData);
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure(['token']);
     }
 
@@ -60,7 +62,7 @@ class UserControllerTest extends TestCase
         $user= \App\Models\User::factory()->create();
         $token= JWTAuth::fromUser($user);
         $response=$this->withHeaders(['Authorization' => "Bearer {$token}",])->json('GET','/api/v1/auth/user');
-        $response->assertStatus(200)
+        $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
                 'user' => [
                     'id',

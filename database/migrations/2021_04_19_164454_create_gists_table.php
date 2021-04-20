@@ -15,6 +15,7 @@ class CreateGistsTable extends Migration
     {
         Schema::create('gists', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
+            $table->softDeletes();
             $table->string('title');
             $table->text('body');
             $table->unsignedBigInteger('user_id');

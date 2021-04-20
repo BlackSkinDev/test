@@ -44,7 +44,7 @@ class UserController extends Controller
     }
 
     public function profile(){
-        $user = JWTAuth::user();
-        return response()->json(['user' => new UserResource($user)],Response::HTTP_OK);
+        $User = JWTAuth::user();
+        return response()->json(['user' => new UserResource($User)],Response::HTTP_OK);
     }
 }

@@ -128,4 +128,15 @@ class GistController extends Controller
 
 
     }
+
+    public function getTrash(){
+
+        $trashed =  Gist::onlyTrashed()->get();
+
+        return response()->json([
+            'trashedGist' =>$trashed,
+        ], Response::HTTP_OK);
+
+    }
+
 }

@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 
 Route::namespace('Api')->group(function (){
 
@@ -28,6 +24,7 @@ Route::namespace('Api')->group(function (){
                 // register and login routes
                   Route::post('/register', 'UserController@register');
                   Route::post('/login', 'UserController@login');
+
 
                   //protected routes
                   Route::middleware(['apipass'])->group(function () {
@@ -40,9 +37,14 @@ Route::namespace('Api')->group(function (){
             //protected routes
             Route::middleware(['apipass'])->group(function () {
 
+
                 // gist operations routes
                 Route::apiResource('gists', GistController::class);
+                Route::get('/trash/gists', 'GistController@getTrash');
+
              });
+
+
         });
 });
 

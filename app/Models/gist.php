@@ -5,10 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuids;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Gist extends Model
 {
     use HasFactory,Uuids;
+
+    use SoftDeletes;
 
     protected $primaryKey = "uuid";
     protected $keyType = 'string';
@@ -28,5 +32,8 @@ class Gist extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+
 
 }

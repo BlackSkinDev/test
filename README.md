@@ -41,6 +41,7 @@ $ composer install
 $ php artisan key:generate
 $ php artisan migrate
 $ php artisan serve
+$ php artisan jwt:secret
 ```
 
 You should be able to visit your app at http://localhost:8000

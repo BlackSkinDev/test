@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GistCreationRequest;
+use App\Http\Requests\GistUpdateRequest;
 use App\Http\Resources\GistResource;
 use App\Models\Gist;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use JWTAuth;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+
 
 class GistController extends Controller
 {
@@ -65,8 +69,34 @@ class GistController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(GistUpdateRequest $request, $id)
     {
+
+        try {
+
+            $gist=Gist::findorfail($id);
+
+            if ($this->user->cannot('update', $gist)) {
+                return response()->json([
+                    'error' => 'Action is Unathorized',
+                ], Response::HTTP_FORBIDDEN);
+            }
+
+            $gist->update($request->validated());
+
+            return response()->json([
+                'message' => 'gist updated successfully',
+            ], Response::HTTP_OK);
+
+
+        } catch (Exception $e) {
+            if ($e instanceof ModelNotFoundException) {
+                return response()->json(['error' => 'cannot find gist'], Response::HTTP_NOT_FOUND);
+            }
+
+        }
+
+
 
     }
 

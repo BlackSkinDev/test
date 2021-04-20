@@ -27,6 +27,7 @@ class ApiMiddleware
         try {
 
             JWTAuth::parseToken()->authenticate();
+            //JWTAuth::setRequest($request)->parseToken()->authenticate();
 
         }
         catch (Exception $e) {

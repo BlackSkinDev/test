@@ -9,15 +9,16 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 class UserController extends Controller
 {
     public function register(RegistrationRequest $request){
 
-        User::create([
+        $user= User::create([
         	'name'=>$request->name,
         	'email'=>$request->email,
-        	'password'=> bcrypt($request->password)
+        	'password'=> Hash::make($request->password)
         ]);
 
         return response()->json([

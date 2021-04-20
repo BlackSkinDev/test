@@ -62,7 +62,7 @@ class GistController extends Controller
         } catch (Exception $e) {
 
             if ($e instanceof ModelNotFoundException) {
-                return response()->json(['error' => 'cannot find gist'], Response::HTTP_NOT_FOUND);
+                return response()->json(['error' => 'gist does not exist'], Response::HTTP_NOT_FOUND);
             }
         }
 
@@ -91,7 +91,7 @@ class GistController extends Controller
 
         } catch (Exception $e) {
             if ($e instanceof ModelNotFoundException) {
-                return response()->json(['error' => 'cannot find gist'], Response::HTTP_NOT_FOUND);
+                return response()->json(['error' => 'gist does not exist'], Response::HTTP_NOT_FOUND);
             }
 
         }
@@ -102,6 +102,30 @@ class GistController extends Controller
 
     public function destroy($id)
     {
+
+        try {
+
+            $gist=Gist::findorfail($id);
+
+            if ($this->user->cannot('delete', $gist)) {
+                return response()->json([
+                    'error' => 'Action is Unathorized',
+                ], Response::HTTP_FORBIDDEN);
+            }
+
+            $gist->delete();
+            return response()->json([
+                'message' => 'gist deleted successfully',
+            ], Response::HTTP_OK);
+
+
+        } catch (Exception $e) {
+            if ($e instanceof ModelNotFoundException) {
+                return response()->json(['error' => 'gist does not exist'], Response::HTTP_NOT_FOUND);
+            }
+
+        }
+
 
     }
 }

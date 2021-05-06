@@ -51,10 +51,19 @@ class GistControllerTest extends TestCase
     /** @test */
     public  function a_logged_in_user_can_create_a_gist(){
 
+<<<<<<< HEAD
 
         $response=$this->withHeaders(['Authorization' => "Bearer {$this->token}",])->json('POST','api/v1/gists',[
             'title'=>$name= $this->faker->text(100),
             'body' => $email= $this->faker->text,
+=======
+        $faker=\Faker\Factory::create();
+        $user= \App\Models\User::factory()->create();
+        $token= JWTAuth::fromUser($user);
+        $response=$this->withHeaders(['Authorization' => "Bearer {$token}",])->json('POST','api/v1/gists',[
+            'title'=>$name= $faker->text(100),
+            'body' => $email= $faker->text,
+>>>>>>> 14d571e0f63ba6ee9af1b8cba61579b98475653c
         ]);
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertExactJson([
@@ -111,10 +120,19 @@ class GistControllerTest extends TestCase
 
     /** @test */
     public  function will_fail_with_a_404_if_gist_to_be_updated_is_not_found(){
+<<<<<<< HEAD
 
         $response=$this->withHeaders(['Authorization' => "Bearer {$this->token}",])->json('PUT',"api/v1/gists/-3",[
             'title'=>$name= $this->faker->text(100),
             'body' => $email= $this->faker->text,
+=======
+        $faker=\Faker\Factory::create();
+        $user= \App\Models\User::factory()->create();
+        $token= JWTAuth::fromUser($user);
+        $response=$this->withHeaders(['Authorization' => "Bearer {$token}",])->json('PUT',"api/v1/gists/-3",[
+            'title'=>$name= $faker->text(100),
+            'body' => $email= $faker->text,
+>>>>>>> 14d571e0f63ba6ee9af1b8cba61579b98475653c
         ]);
         $response->assertStatus(404);
     }

@@ -29,9 +29,9 @@ class GistController extends Controller
 
     public function index()
     {
-        $gists = Gist::with('user')->get();
+        $Gists = Gist::with('user')->get();
         return response()->json([
-            'gists' =>GistResource::collection($gists)
+            'gists' =>GistResource::collection($Gists)
         ],Response::HTTP_OK);
     }
 

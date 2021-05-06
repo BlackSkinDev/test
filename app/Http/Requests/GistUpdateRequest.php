@@ -44,7 +44,7 @@ class GistUpdateRequest extends FormRequest
     {
         return [
             'title'=>'required',
-            
+            'body'=>'required',
         ];
     }
 
